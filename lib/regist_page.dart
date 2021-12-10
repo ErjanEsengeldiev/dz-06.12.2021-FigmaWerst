@@ -28,7 +28,7 @@ class _RegistWidgetState extends State<RegistWidget> {
   }
 
   //Список пользовотелей
-  final List<_User> _users = [_User(login: 'admin', password: 'admin')];
+  final List<_User> _users = [_User(login: 'admin@gmail.com', password: 'admin')];
   //Функция onTup для erorText
   void onTupForErorText() {
     erorTextForEmail = null;
@@ -37,15 +37,16 @@ class _RegistWidgetState extends State<RegistWidget> {
   }
 
   //Функция для проверки на наличие пользовотеля
+  
 
   String? erorTextForEmail = null;
   String? erorTextForPassword = null;
   void _chekUser() {
     for (int i = 0; i < _users.length; i++) {
-      if (_users[i].login == controllerEmail.text &&
+      if (_users[i].login == controllerEmail.text &&  RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(controllerEmail.text) &&
           _users[i].password == controllerPassword.text) {
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => Home()));
+            context, MaterialPageRoute(builder: (context) => const Home()));
       } else if (controllerPassword.text.isEmpty &&
           controllerEmail.text.isEmpty) {
         erorTextForEmail = 'Заполните пустые поля';
@@ -64,93 +65,95 @@ class _RegistWidgetState extends State<RegistWidget> {
       body: Container(
         alignment: Alignment.center,
         padding: const EdgeInsets.all(18),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            //Текст "Вход"
-            const Text(
-              'Вход',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  fontSize: 20),
-            ),
-            const SizedBox(
-              height: 36,
-            ),
-            //Email
-            Container(
-              color: const Color.fromRGBO(249, 248, 255, 1),
-              child: TextField(
-                onTap: onTupForErorText,
-                controller: controllerEmail,
-                decoration: InputDecoration(
-                  errorText: erorTextForEmail,
-                  enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: whitePurple)),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(width: 0.1),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  hintText: 'E-mail',
-                  hintStyle: TextStyle(color: whitePurple),
-                ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              //Текст "Вход"
+              const Text(
+                'Вход',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontSize: 20),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            //Password
-            Container(
-              color: const Color.fromRGBO(249, 248, 255, 1),
-              child: TextField(
-                onTap: onTupForErorText,
-                controller: controllerPassword,
-                obscureText: obscureTextForButton,
-                decoration: InputDecoration(
-                    errorText: erorTextForPassword,
-                    suffixIcon: GestureDetector(
-                      onTap: seePassword,
-                      child: const Icon(
-                        Icons.visibility_off,
-                        color: Color.fromRGBO(208, 208, 208, 1),
-                      ),
-                    ),
+              const SizedBox(
+                height: 36,
+              ),
+              //Email
+              Container(
+                color: const Color.fromRGBO(249, 248, 255, 1),
+                child: TextFormField(
+                  onTap: onTupForErorText,
+                  controller: controllerEmail,
+                  decoration: InputDecoration(
+                    errorText: erorTextForEmail,
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: whitePurple),
+                        borderSide: BorderSide(color: whitePurple)),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(width: 0.1),
                       borderRadius: BorderRadius.circular(5),
                     ),
-                    border: OutlineInputBorder(),
-                    hintText: 'Password',
-                    hintStyle: TextStyle(color: whitePurple)),
-              ),
-            ),
-            const SizedBox(
-              height: 64,
-            ),
-            //Кнопка "Войти"
-            ElevatedButton(
-                onPressed: _chekUser,
-                style: ButtonStyle(
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50),
-                    )),
-                    backgroundColor: MaterialStateProperty.all(
-                      const Color.fromRGBO(249, 6, 64, 1),
-                    )),
-                child: Container(
-                  alignment: Alignment.center,
-                  width: 132,
-                  height: 50,
-                  child: const Text(
-                    'Вйоти',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    hintText: 'E-mail',
+                    hintStyle: TextStyle(color: whitePurple),
                   ),
-                ))
-          ],
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              //Password
+              Container(
+                color: const Color.fromRGBO(249, 248, 255, 1),
+                child: TextField(
+                  onTap: onTupForErorText,
+                  controller: controllerPassword,
+                  obscureText: obscureTextForButton,
+                  decoration: InputDecoration(
+                      errorText: erorTextForPassword,
+                      suffixIcon: GestureDetector(
+                        onTap: seePassword,
+                        child: const Icon(
+                          Icons.visibility_off,
+                          color: Color.fromRGBO(208, 208, 208, 1),
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: whitePurple),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      border: const OutlineInputBorder(),
+                      hintText: 'Password',
+                      hintStyle: TextStyle(color: whitePurple)),
+                ),
+              ),
+              const SizedBox(
+                height: 64,
+              ),
+              //Кнопка "Войти"
+              ElevatedButton(
+                  onPressed: _chekUser,
+                  style: ButtonStyle(
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      )),
+                      backgroundColor: MaterialStateProperty.all(
+                        const Color.fromRGBO(249, 6, 64, 1),
+                      )),
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: 132,
+                    height: 50,
+                    child: const Text(
+                      'Вйоти',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ))
+            ],
+          ),
         ),
       ),
     );

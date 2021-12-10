@@ -11,13 +11,14 @@ class HomeBackgraoundColors extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
       children: [
         Container(
           width: double.infinity,
           color: const Color.fromRGBO(159, 138, 138, 1),
           height: MediaQuery.of(context).size.height * 0.5,
         ),
+       const  Image(image: AssetImage('lib/images/Group 357main_shape.png'))
       ],
     );
   }
